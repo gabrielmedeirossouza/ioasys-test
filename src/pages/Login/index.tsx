@@ -1,10 +1,17 @@
-import { Container } from "./styles";
+import { Button } from "@/components/global";
 import { MainContent } from "@/components/shared";
+import { Container } from "./styles";
 
-export const Login = () => (
-  <Container>
-    <MainContent>
-      <h1>Login</h1>
-    </MainContent>
-  </Container>
-);
+export const Login = () => {
+  const handleClick = () => {
+    console.log("Apertei no botão");
+  };
+
+  return (
+    <Container>
+      <MainContent>
+        <Button onClick={handleClick}>Entrar</Button>
+      </MainContent>
+    </Container>
+  );
+};
