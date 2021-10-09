@@ -1,3 +1,15 @@
+import { ThemeProvider } from "styled-components";
+import { I18nextProvider } from "react-i18next";
+
+import { light } from "@/styles/themes";
+import { GlobalStyle } from "@/styles/shared/main";
+
+import { i18next } from "@/i18n";
+
 export const App = () => (
-  <h1>Olá Mundo</h1>
+  <ThemeProvider theme={light}>
+    <I18nextProvider i18n={i18next}>
+      <GlobalStyle />
+    </I18nextProvider>
+  </ThemeProvider>
 );
