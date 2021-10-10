@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import { MainContent } from "@/components/shared";
 
-import logoLgo from "@/assets/lgo/ioasys-light.svg";
 import loginBkg from "@/assets/bkg/login.jpg";
+import logoLgo from "@/assets/lgo/ioasys-light.svg";
 
 export const Container = styled.div`
   display: flex;

@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTranslation } from "react-i18next";
+import { useAuth } from "@/hooks";
 import { schema } from "./schema";
 
 import { Input, Button, ErrorMessage } from "@/components/global";
@@ -13,6 +14,7 @@ interface IFormInputs {
 
 export const Login = () => {
   const { t } = useTranslation();
+  const auth = useAuth();
 
   const { register, handleSubmit, formState } = useForm<IFormInputs>({
     resolver: yupResolver(schema),
@@ -22,7 +24,10 @@ export const Login = () => {
     !formState.errors.email?.type && !formState.errors.password?.type;
 
   const onSubmit = (formData: IFormInputs) => {
-    console.log(formData);
+    auth.Login({
+      email: formData.email,
+      password: formData.password,
+    });
   };
 
   return (
