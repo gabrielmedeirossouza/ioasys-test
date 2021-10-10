@@ -1,13 +1,14 @@
-import { MouseEventHandler, ReactNode } from "react";
+import { MouseEventHandler } from "react";
 import { Container } from "./styles";
 
 interface IButtonProps {
-  children: ReactNode;
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  text: string;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  type?: "button" | "submit" | "reset";
 }
 
-export const Button = ({ children, onClick }: IButtonProps) => (
-  <Container type="button" onClick={onClick}>
-    {children}
+export const Button = ({ text, onClick, type }: IButtonProps) => (
+  <Container type={type ?? "button"} onClick={onClick}>
+    {text}
   </Container>
 );
