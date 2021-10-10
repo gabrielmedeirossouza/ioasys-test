@@ -1,14 +1,22 @@
 import { MouseEventHandler } from "react";
+
+import { Icon } from "@/components/global";
 import { Container } from "./styles";
 
 interface IButtonProps {
-  text: string;
+  text?: string;
+  icon?: string;
+  alt?: string;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   type?: "button" | "submit" | "reset";
 }
 
-export const Button = ({ text, onClick, type }: IButtonProps) => (
-  <Container type={type ?? "button"} onClick={onClick}>
-    {text}
-  </Container>
-);
+export const Button = ({ text, icon, alt, onClick, type }: IButtonProps) => {
+  const isText = !!text;
+
+  return (
+    <Container isText={isText} type={type ?? "button"} onClick={onClick}>
+      {text ?? <Icon icon={icon ?? ""} alt={alt} />}
+    </Container>
+  );
+};

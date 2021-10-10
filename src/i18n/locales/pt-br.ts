@@ -36,8 +36,8 @@ export const ptBr = {
   path: {
     global: {
       applicationName: "Books",
-      paginator: "Página {{x, strong}} de {{y, strong}}",
-      usernameWelcome: "Bem vindo, {{username, strong}}",
+      paginator: "Página <1>{{x}}</1> de <2>{{y}}</2>",
+      usernameWelcome: "Bem vindo, <1>{{username}}!</1>",
     },
     pages: {
       login,

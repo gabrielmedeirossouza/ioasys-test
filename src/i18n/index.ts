@@ -5,17 +5,11 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import { translations } from "./locales";
 
-const interpolations = {
-  strong: (value: string, format: string) =>
-    format === "strong" ? `<strong>${value}</strong>` : value,
-};
-
 const i18nConfig = {
   debug: true,
   resources: translations,
   fallbackLng: "pt-BR", // Altere para en-US para traduzir automaticamente toda a aplicação
   defaultNS: "path",
-  interpolations,
 };
 
 i18n.use(initReactI18next).init(i18nConfig);

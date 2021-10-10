@@ -6,10 +6,26 @@ interface ILogin {
   password: string;
 }
 
+interface IAuthorization {
+  authorization: string;
+}
+
+interface IUserData {
+  id: string;
+  name: string;
+  gender: string;
+  birthdate: string;
+  email: string;
+}
+
+interface ILoginResponse {
+  data: IUserData;
+  headers: IAuthorization;
+}
+
 interface IAuthContextData {
   signed: boolean;
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  user: object | null;
+  user: IUserData | null;
   Login(data: ILogin): Promise<void>;
   Logout(): void;
 }
@@ -23,8 +39,7 @@ export const AuthContext = createContext<IAuthContextData>(
 );
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const [user, setUser] = useState<object | null>(null);
+  const [user, setUser] = useState<IUserData | null>(null);
 
   useEffect(() => {
     const storagedUser = localStorage.getItem("@App:user");
@@ -40,19 +55,19 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
   }, []);
 
   const Login = async ({ email, password }: ILogin) => {
-    const response = await api.post("/auth/sign-in", {
+    const { data, headers }: ILoginResponse = await api.post("/auth/sign-in", {
       email,
       password,
     });
 
-    setUser(response.data);
+    setUser(data);
 
     if (api.defaults.headers) {
-      api.defaults.headers.Authorization = `Bearer ${response.headers.authorization}`;
+      api.defaults.headers.Authorization = `Bearer ${headers.authorization}`;
     }
 
-    localStorage.setItem("@App:user", JSON.stringify(response.data));
-    localStorage.setItem("@App:token", response.headers.authorization);
+    localStorage.setItem("@App:user", JSON.stringify(data));
+    localStorage.setItem("@App:token", headers.authorization);
   };
 
   const Logout = () => {
