@@ -16,6 +16,7 @@ export const Container = styled.button<IContainer>`
           font-size: 1rem;
           font-weight: 500;
           line-height: 1.25rem;
+          white-space: nowrap;
           padding: 0.5rem 1.25rem;
           border-radius: 999px;
 

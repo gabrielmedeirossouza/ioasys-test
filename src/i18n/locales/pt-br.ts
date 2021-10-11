@@ -17,7 +17,7 @@ const login = {
 
 const home = {
   books: {
-    pages: "{{pages}} páginas",
+    pages: "<1>{{pages}}</1> páginas",
     publishingCompany: "Editora {{publishingCompany}}",
     publishedDate: "Publicado em {{publishedDate}}",
   },

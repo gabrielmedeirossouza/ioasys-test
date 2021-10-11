@@ -1,31 +1,31 @@
 import { Trans, useTranslation } from "react-i18next";
-import { useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { IBook } from "@/@types/books";
 
-import { api } from "@/services";
+import { request } from "@/services";
 import { useAuth } from "@/hooks";
 
 import { Header } from "@/components/shared";
-import { Container, Welcome, Book } from "./styles";
-
-import book from "@/assets/bkg/ebook.jpg";
+import { Container, Welcome, Content, Book } from "./styles";
 
 export const Home = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [books, setBooks] = useState<IBook[]>({} as IBook[]);
+
+  const hasBooks = books.length > 0;
 
   const fetchBooks = async () => {
-    const resp = await api.get("/books", {
-      params: {
-        page: 1,
-        amount: 12,
-      },
-    });
-
-    console.log(resp);
+    const data = await request.attemptGetBooks();
+    setBooks(data);
   };
 
   useEffect(() => {
     fetchBooks();
+  }, []);
+
+  const handleShowDetail = useCallback((id) => {
+    console.log(id);
   }, []);
 
   return (
@@ -39,21 +39,42 @@ export const Home = () => {
         </Welcome>
       </Header>
 
-      <Book>
-        <img src={book} alt="Book" />
-        <section>
-          <div>
-            <h2>Crossing the Chasm</h2>
-            <h3>Geoffrey A. Moore</h3>
-          </div>
+      <Content>
+        {hasBooks &&
+          books.map((book) => (
+            <Book key={book.id} onClick={() => handleShowDetail(book.id)}>
+              <img src={book.imageUrl} alt="Book" />
+              <section>
+                <div>
+                  <h2>{book.title}</h2>
+                  {book.authors.map((author) => (
+                    <h3 key={author}>{author}</h3>
+                  ))}
+                </div>
 
-          <div>
-            <span>150 páginas</span>
-            <span>Editora Loyala</span>
-            <span>Publicado em 2020</span>
-          </div>
-        </section>
-      </Book>
+                <div>
+                  <span>
+                    <Trans i18nKey="pages.home.books.pages">
+                      {{ pages: book.pageCount }}
+                    </Trans>
+                  </span>
+
+                  <span>
+                    <Trans i18nKey="pages.home.books.publishingCompany">
+                      {{ publishingCompany: book.publisher }}
+                    </Trans>
+                  </span>
+
+                  <span>
+                    <Trans i18nKey="pages.home.books.publishedDate">
+                      {{ publishedDate: book.published }}
+                    </Trans>
+                  </span>
+                </div>
+              </section>
+            </Book>
+          ))}
+      </Content>
     </Container>
   );
 };
