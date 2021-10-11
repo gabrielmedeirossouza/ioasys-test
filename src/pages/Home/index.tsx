@@ -1,12 +1,27 @@
 import { Trans, useTranslation } from "react-i18next";
-import { useCallback, useEffect, useState } from "react";
-import { IBook } from "@/@types/books";
+import { useEffect, useState } from "react";
 
 import { request } from "@/services";
 import { useAuth } from "@/hooks";
 
 import { Header } from "@/components/shared";
-import { Container, Welcome, Content, Book } from "./styles";
+import { Carousel } from "./components";
+import { Container, HelloUser } from "./styles";
+
+export interface IBook {
+  id: string;
+  title: string;
+  description: string;
+  authors: string[];
+  category: string;
+  language: string;
+  pageCount: number;
+  published: number;
+  imageUrl: string;
+  publisher: string;
+  isbn10: string;
+  isbn13: string;
+}
 
 export const Home = () => {
   const { t } = useTranslation();
@@ -24,57 +39,17 @@ export const Home = () => {
     fetchBooks();
   }, []);
 
-  const handleShowDetail = useCallback((id) => {
-    console.log(id);
-  }, []);
-
   return (
     <Container>
       <Header>
-        <Welcome>
+        <HelloUser>
           <Trans i18nKey="global.usernameWelcome">
-            {t("global.usernameWelcome")}
-            <strong>{{ username: user?.name }}</strong>
+            {t("global.usernameWelcome")} <strong>{{ username: user?.name }}</strong>
           </Trans>
-        </Welcome>
+        </HelloUser>
       </Header>
 
-      <Content>
-        {hasBooks &&
-          books.map((book) => (
-            <Book key={book.id} onClick={() => handleShowDetail(book.id)}>
-              <img src={book.imageUrl} alt="Book" />
-              <section>
-                <div>
-                  <h2>{book.title}</h2>
-                  {book.authors.map((author) => (
-                    <h3 key={author}>{author}</h3>
-                  ))}
-                </div>
-
-                <div>
-                  <span>
-                    <Trans i18nKey="pages.home.books.pages">
-                      {{ pages: book.pageCount }}
-                    </Trans>
-                  </span>
-
-                  <span>
-                    <Trans i18nKey="pages.home.books.publishingCompany">
-                      {{ publishingCompany: book.publisher }}
-                    </Trans>
-                  </span>
-
-                  <span>
-                    <Trans i18nKey="pages.home.books.publishedDate">
-                      {{ publishedDate: book.published }}
-                    </Trans>
-                  </span>
-                </div>
-              </section>
-            </Book>
-          ))}
-      </Content>
+      {hasBooks ? <Carousel books={books} /> : <h1>teste</h1>}
     </Container>
   );
 };

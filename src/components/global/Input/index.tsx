@@ -12,24 +12,13 @@ interface IInputProps {
   message?: string;
 }
 
-export const Input = ({
-  children,
-  type,
-  title,
-  placeholder,
-  register,
-  message,
-}: IInputProps) => (
+export const Input = ({ children, type, title, placeholder, register, message }: IInputProps) => (
   <Container>
     <InputContainer>
       <section>
         <Title>{title}</Title>
 
-        <InputField
-          type={type ?? "text"}
-          placeholder={placeholder}
-          {...register}
-        />
+        <InputField type={type ?? "text"} placeholder={placeholder} {...register} />
       </section>
 
       {children}
