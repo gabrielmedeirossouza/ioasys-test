@@ -23,7 +23,7 @@ interface IBooks {
 export const Carousel = ({ books }: IBooks) => (
   <Container>
     {books.map((book) => (
-      <CardBook book={book} />
+      <CardBook book={book} key={book.id} />
     ))}
   </Container>
 );

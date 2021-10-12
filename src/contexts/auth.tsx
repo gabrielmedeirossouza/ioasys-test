@@ -34,9 +34,7 @@ interface IAuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthContext = createContext<IAuthContextData>(
-  {} as IAuthContextData
-);
+export const AuthContext = createContext<IAuthContextData>({} as IAuthContextData);
 
 export const AuthProvider = ({ children }: IAuthProviderProps) => {
   const [user, setUser] = useState<IUserData | null>(null);
@@ -77,11 +75,5 @@ export const AuthProvider = ({ children }: IAuthProviderProps) => {
     sessionStorage.removeItem("App:token");
   };
 
-  return (
-    <AuthContext.Provider
-      value={{ signed: Boolean(user), user, Login, Logout }}
-    >
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ signed: Boolean(user), user, Login, Logout }}>{children}</AuthContext.Provider>;
 };

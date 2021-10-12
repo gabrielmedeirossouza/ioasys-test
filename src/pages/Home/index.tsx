@@ -1,14 +1,11 @@
 import { Trans, useTranslation } from "react-i18next";
-import { useEffect, useState } from "react";
-
-import { request } from "@/services";
-import { useAuth } from "@/hooks";
+import { useAuth, useFetch } from "@/hooks";
 
 import { Header } from "@/components/shared";
 import { Carousel } from "./components";
 import { Container, HelloUser } from "./styles";
 
-export interface IBook {
+interface IBook {
   id: string;
   title: string;
   description: string;
@@ -23,21 +20,26 @@ export interface IBook {
   isbn13: string;
 }
 
+interface IBooksData {
+  data: IBook[];
+  page: number;
+  totalItems: number;
+  totalPages: number;
+}
+
+interface IFetchBooksParams {
+  page: number;
+  amount: number;
+}
+
 export const Home = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
-  const [books, setBooks] = useState<IBook[]>({} as IBook[]);
 
-  const hasBooks = books.length > 0;
+  const params: IFetchBooksParams = { page: 1, amount: 12 };
 
-  const fetchBooks = async () => {
-    const data = await request.attemptGetBooks();
-    setBooks(data);
-  };
-
-  useEffect(() => {
-    fetchBooks();
-  }, []);
+  const { response } = useFetch<IBooksData, IFetchBooksParams>("/books", params);
+  const books = response?.data;
 
   return (
     <Container>
@@ -49,7 +51,7 @@ export const Home = () => {
         </HelloUser>
       </Header>
 
-      {hasBooks ? <Carousel books={books} /> : <h1>teste</h1>}
+      {books && <Carousel books={books} />}
     </Container>
   );
 };
