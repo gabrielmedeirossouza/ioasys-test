@@ -3,13 +3,14 @@ import { darken } from "polished";
 
 interface IContainer {
   isText: boolean;
+  disabled?: boolean;
 }
 
 export const Container = styled.button<IContainer>`
   border: none;
   outline: none;
 
-  ${({ isText }) =>
+  ${({ isText, disabled }) =>
     isText
       ? css`
           color: ${({ theme }) => theme.colors.text.ioasysPrimary};
@@ -24,15 +25,17 @@ export const Container = styled.button<IContainer>`
 
           transition: color 0.2s, background-color 0.2s;
 
-          &:hover {
-            color: ${({ theme }) => theme.colors.primary};
-            background-color: ${({ theme }) => theme.colors.text.ioasysPrimary};
-          }
+          ${!disabled &&
+          css`
+            &:hover {
+              color: ${({ theme }) => theme.colors.primary};
+              background-color: ${({ theme }) => theme.colors.text.ioasysPrimary};
+            }
 
-          &:active {
-            background-color: ${({ theme }) =>
-              darken(0.2, theme.colors.text.ioasysPrimary)};
-          }
+            &:active {
+              background-color: ${({ theme }) => darken(0.2, theme.colors.text.ioasysPrimary)};
+            }
+          `}
         `
       : css`
           display: flex;
@@ -41,12 +44,15 @@ export const Container = styled.button<IContainer>`
           background-color: transparent;
           transition: transform 0.1s;
 
-          &:hover {
-            transform: scale(1.1);
-          }
+          ${!disabled &&
+          css`
+            &:hover {
+              transform: scale(1.1);
+            }
 
-          &:active {
-            transform: scale(0.9);
-          }
+            &:active {
+              transform: scale(0.9);
+            }
+          `}
         `}
 `;

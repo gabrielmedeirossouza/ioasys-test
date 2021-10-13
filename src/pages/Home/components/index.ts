@@ -1,4 +1,4 @@
 import { CardBook } from "./CardBook";
-import { Carousel } from "./Carousel";
+import { MemoizedCarousel } from "./Carousel";
 
-export { CardBook, Carousel };
+export { CardBook, MemoizedCarousel };

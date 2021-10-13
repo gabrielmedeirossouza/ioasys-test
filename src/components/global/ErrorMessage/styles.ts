@@ -13,8 +13,7 @@ export const Container = styled.div<IContainer>`
   margin: 1rem 0;
 
   border-radius: 0.25rem;
-  background-color: ${({ theme }) =>
-    transparentize(0.6, theme.colors.background)};
+  background-color: ${({ theme }) => transparentize(0.6, theme.colors.background)};
 
   &:before {
     content: "";
@@ -23,8 +22,7 @@ export const Container = styled.div<IContainer>`
     top: -0.5rem;
     left: 1rem;
 
-    border-bottom: 0.5rem solid
-      ${({ theme }) => transparentize(0.6, theme.colors.background)};
+    border-bottom: 0.5rem solid ${({ theme }) => transparentize(0.6, theme.colors.background)};
     border-left: 0.5rem solid transparent;
     border-right: 0.5rem solid transparent;
   }

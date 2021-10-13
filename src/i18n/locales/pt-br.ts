@@ -17,7 +17,7 @@ const login = {
 
 const home = {
   books: {
-    pages: "<1>{{pages}}</1> páginas",
+    pages: "<0>{{pages}}</0> páginas",
     publishingCompany: "Editora {{publishingCompany}}",
     publishedDate: "Publicado em {{publishedDate}}",
   },
@@ -36,8 +36,8 @@ export const ptBr = {
   path: {
     global: {
       applicationName: "Books",
-      paginator: "Página <1>{{x}}</1> de <2>{{y}}</2>",
-      usernameWelcome: "Bem vindo, <1>{{username}}!</1>",
+      paginator: "Página <0>{{currentPage}}</0> de <0>{{totalPages}}</0>",
+      usernameWelcome: "Bem vindo, <0>{{username}}!</0>",
     },
     pages: {
       login,

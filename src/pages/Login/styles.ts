@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { MainContent } from "@/components/shared";
-
 import loginBkg from "@/assets/bkg/login.jpg";
 import logoLgo from "@/assets/lgo/ioasys-light.svg";
 
@@ -12,9 +10,20 @@ export const Container = styled.div`
   background-size: cover;
   width: 100vw;
   height: 100vh;
-`;
 
-export const Content = styled(MainContent)``;
+  @media (max-width: 1300px) {
+    header,
+    form {
+      justify-content: center;
+    }
+
+    form {
+      div {
+        margin: auto;
+      }
+    }
+  }
+`;
 
 export const Header = styled.header`
   display: flex;

@@ -4,14 +4,7 @@ import { useAuth } from "@/hooks";
 
 import { Button } from "@/components/global";
 
-import {
-  Container,
-  StyledMainContent,
-  LogoArea,
-  Img,
-  Title,
-  Content,
-} from "./styles";
+import { Container, StyledMainContent, LogoArea, Img, Title, Content } from "./styles";
 
 import logoutIco from "@/assets/ico/logout.svg";
 

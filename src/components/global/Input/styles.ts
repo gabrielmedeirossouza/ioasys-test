@@ -16,11 +16,14 @@ export const InputContainer = styled.div`
 
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
-  background-color: ${({ theme }) =>
-    transparentize(0.68, theme.colors.secondary)};
+  background-color: ${({ theme }) => transparentize(0.68, theme.colors.secondary)};
 
   section {
     width: 100%;
+  }
+
+  @media (max-width: 1300px) {
+    min-width: 300px;
   }
 `;
 

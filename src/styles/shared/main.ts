@@ -47,11 +47,6 @@ export const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 
-  [disabled] {
-    opacity: 0.6;
-    cursor: not-allowed;
-  }
-
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,

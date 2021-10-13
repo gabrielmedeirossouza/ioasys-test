@@ -1,11 +1,18 @@
 import styled from "styled-components";
 import { transparentize } from "polished";
 
-export const Book = styled.div`
+interface IBook {
+  dynamicWidth?: number;
+}
+
+export const Book = styled.div<IBook>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
+
+  width: ${({ dynamicWidth }) => (dynamicWidth ? `${dynamicWidth}px` : "18rem")};
+  height: 11rem;
 
   border-radius: 0.25rem;
   background-color: ${({ theme }) => theme.colors.primary};

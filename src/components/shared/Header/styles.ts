@@ -6,6 +6,10 @@ import logoLgo from "@/assets/lgo/ioasys-dark.svg";
 export const Container = styled.header`
   width: 100%;
   padding: 2.625rem 0;
+
+  @media (max-width: 1300px) {
+    padding: 2.625rem 2rem;
+  }
 `;
 
 export const StyledMainContent = styled(MainContent)`
@@ -15,6 +19,10 @@ export const StyledMainContent = styled(MainContent)`
 
 export const LogoArea = styled.div`
   display: flex;
+
+  @media (max-width: 1300px) {
+    flex-direction: column;
+  }
 `;
 
 export const Img = styled.img.attrs(() => ({

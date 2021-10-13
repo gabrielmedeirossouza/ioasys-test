@@ -1,8 +1,12 @@
+import { useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { useAuth, useFetch } from "@/hooks";
+import { useAuth } from "@/hooks";
+
+import { api } from "@/services";
+import { getFirstName } from "@/utils";
 
 import { Header } from "@/components/shared";
-import { Carousel } from "./components";
+import { MemoizedCarousel } from "./components";
 import { Container, HelloUser } from "./styles";
 
 interface IBook {
@@ -20,38 +24,54 @@ interface IBook {
   isbn13: string;
 }
 
-interface IBooksData {
+type TData = {
   data: IBook[];
+};
+
+interface IBooksData {
+  data: TData;
   page: number;
   totalItems: number;
   totalPages: number;
 }
 
-interface IFetchBooksParams {
-  page: number;
-  amount: number;
-}
+const DEFAULT_AMOUNT = 25;
 
 export const Home = () => {
   const { t } = useTranslation();
   const { user } = useAuth();
+  const [books, setBooks] = useState<IBook[]>([] as IBook[]);
 
-  const params: IFetchBooksParams = { page: 1, amount: 12 };
+  const attemptGetMoreBooks = async () => {
+    const { data }: IBooksData = await api.get("/books", {
+      params: {
+        page: 1,
+        amount: books.length + DEFAULT_AMOUNT,
+      },
+    });
 
-  const { response } = useFetch<IBooksData, IFetchBooksParams>("/books", params);
-  const books = response?.data;
+    if (data.data) {
+      setBooks(data.data);
+    }
+  };
+
+  useEffect(() => {
+    attemptGetMoreBooks();
+  }, []);
+
+  const hasBooks = books && books.length;
 
   return (
     <Container>
       <Header>
         <HelloUser>
-          <Trans i18nKey="global.usernameWelcome">
-            {t("global.usernameWelcome")} <strong>{{ username: user?.name }}</strong>
+          <Trans i18nKey="global.usernameWelcome" t={t}>
+            <strong>{{ username: getFirstName(user?.name) }}</strong>
           </Trans>
         </HelloUser>
       </Header>
 
-      {books && <Carousel books={books} />}
+      {hasBooks && <MemoizedCarousel books={books} onLastPage={attemptGetMoreBooks} />}
     </Container>
   );
 };

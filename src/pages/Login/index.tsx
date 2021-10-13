@@ -5,7 +5,8 @@ import { useAuth } from "@/hooks";
 import { schema } from "./schema";
 
 import { Input, Button, ErrorMessage } from "@/components/global";
-import { Container, Content, Header, HeroImg, HeroTitle } from "./styles";
+import { MainContent } from "@/components/shared";
+import { Container, Header, HeroImg, HeroTitle } from "./styles";
 
 interface IFormInputs {
   email: string;
@@ -20,8 +21,7 @@ export const Login = () => {
     resolver: yupResolver(schema),
   });
 
-  const isValidForm =
-    !formState.errors.email?.type && !formState.errors.password?.type;
+  const isValidForm = !formState.errors.email?.type && !formState.errors.password?.type;
 
   const onSubmit = (formData: IFormInputs) => {
     auth.Login({
@@ -32,7 +32,7 @@ export const Login = () => {
 
   return (
     <Container>
-      <Content>
+      <MainContent>
         <Header>
           <HeroImg />
           <HeroTitle>{t("global.applicationName")}</HeroTitle>
@@ -55,13 +55,8 @@ export const Login = () => {
           </Input>
         </form>
 
-        {!isValidForm && (
-          <ErrorMessage
-            msg={t("pages.login.form.errors.invalidEmailOrPassword")}
-            floating
-          />
-        )}
-      </Content>
+        {!isValidForm && <ErrorMessage msg={t("pages.login.form.errors.invalidEmailOrPassword")} floating />}
+      </MainContent>
     </Container>
   );
 };
